@@ -31,6 +31,11 @@ The result is still a normal Fedora system. Users SSH in as `openclaw`, edit
 OpenClaw files in `~/.openclaw`, use the host `openclaw` CLI wrapper, and let
 systemd/Podman keep the service running.
 
+For test and demo images, `openclaw` is granted passwordless sudo so local
+bring-up and bootc update testing are straightforward. For production, run
+OpenClaw as an unprivileged service user and use a separate administrative user
+or tightly scoped sudo policy for OS management and bootc updates.
+
 ## Start Here
 
 - Build the image: [docs/build.md](docs/build.md)
