@@ -60,6 +60,7 @@ Use this prompt with a coding agent to get oriented and run the local VM flow:
 I am working in the tank-os repo. This repo builds a Fedora bootc image that runs OpenClaw as a rootless Podman Quadlet owned by the `openclaw` user. Please help me get a local smoke test running.
 
 Goals:
+- Clone the repository `git clone https://github.com/LobsterTrap/tank-os.git` and work from there (cd)
 - Build or use the published bootc image `quay.io/sallyom/tank-os:latest` for arm64 or amd64.
 - Build a QCOW2 disk image with the Podman Desktop BootC extension or manual bootc-image-builder flow.
 - Start the disk image as a Linux VM on macOS/Podman Desktop.
