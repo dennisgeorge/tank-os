@@ -71,6 +71,16 @@ Goals:
 - Print the dashboard URL from the VM with `openclaw dashboard --no-open`.
 - Configure model provider and service-gator credentials using rootless Podman secrets as the `openclaw` user, then run `tank-openclaw-secrets`.
 
+Post-boot operations (once SSH'd in as `openclaw`):
+- The host `openclaw` command delegates into the running container. Use it for all CLI operations: `openclaw gateway status --deep`, `openclaw doctor`, `openclaw dashboard --no-open`, `openclaw devices list`.
+- Check service health: `systemctl --user status openclaw.service`, `podman ps`, `podman logs -f openclaw`.
+- If the OpenClaw service fails on first boot with a permission error on `~/.openclaw`, fix ownership with `sudo chown -R openclaw:openclaw ~/.openclaw` and restart: `systemctl --user restart openclaw.service`.
+- If the service times out pulling the ~3.5 GB container image, pull manually first: `podman pull ghcr.io/openclaw/openclaw:latest`, then restart the service.
+- Edit OpenClaw config and workspace files directly under `~/.openclaw/`. Restart the service after config changes: `systemctl --user restart openclaw.service`.
+- Create model provider secrets: `printf '%s' "$ANTHROPIC_API_KEY" | podman secret create anthropic_api_key -`, then run `tank-openclaw-secrets` and restart the service. Supported secret names: `anthropic_api_key`, `openai_api_key`, `gemini_api_key`, `google_api_key`, `openrouter_api_key`.
+- Create service-gator secrets the same way: `printf '%s' "$GH_TOKEN" | podman secret create gh_token -`. Edit scopes at `~/.config/service-gator/scopes.json`. Then `tank-openclaw-secrets && systemctl --user restart service-gator.service`.
+- For low-level debugging, open a shell inside the container: `podman exec -it openclaw sh`.
+
 Constraints:
 - Do not bake private keys or API keys into the image.
 - Keep OpenClaw state editable under `~openclaw/.openclaw`.
