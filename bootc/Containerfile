@@ -4,7 +4,7 @@ FROM ${FEDORA_BOOTC_BASE}
 LABEL containers.bootc=1 \
   org.opencontainers.image.title="tank-os" \
   org.opencontainers.image.description="Fedora bootc image for OpenClaw on rootless Podman" \
-  org.opencontainers.image.source="https://github.com/sallyom/tank-os"
+  org.opencontainers.image.source="https://github.com/LobsterTrap/tank-os"
 
 ARG OPENCLAW_UID=1000
 ARG OPENCLAW_GID=1000
